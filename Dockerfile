@@ -1,12 +1,16 @@
 FROM python:3.8.2
 
-RUN pip3 install Flask
-RUN pip3 install uwsgi
+#RUN sudo apt-get pip3
+RUN pip3 install Flask \
+    && pip3 install uwsgi
 
-RUN mkdir /src
+WORKDIR /scr
 
-COPY app.py /src
-COPY uwsgi.ini
+COPY app.py ./
+COPY index.py ./
+COPY uwsgi.ini ./
 
-CMD ["uwsgi","--ini uwsgi.ini"]
+EXPOSE 9099
+
+CMD ["python3","/src/index.py"]
 
